@@ -22,7 +22,7 @@ public class BasePage extends Page{
     @FindBy(xpath = "//a[@lang='en-US']")
     private WebElement changeToEnglish;
 
-    @FindBy(xpath = "//a[@lang='pl']")
+    @FindBy(xpath = "//a[@hreflang='pl']")
     private WebElement changeToPolish;
 
     @FindBy(id = "search-web")
@@ -55,6 +55,12 @@ public class BasePage extends Page{
     @FindBy(xpath = "//a[@title='English']")
     private WebElement englishTab;
 
+    @FindBy(className = "page-title")
+    private WebElement searchResultPageTitle;
+
+    @FindBy(className = "copy")
+    private WebElement copyrightsFooter;
+
     public void clickFacultyLogo() {
         facultyLogo.click();
     }
@@ -74,6 +80,73 @@ public class BasePage extends Page{
     public void clickUsosButton() {
         usosButton.click();
     }
+
+    public void clickEnglishButton() {
+        changeToEnglish.click();
+    }
+
+    public void clickPolishButton() {
+        changeToPolish.click();
+    }
+
+    public void clickWebRadio() {
+        searchWebRadio.click();
+    }
+
+    public boolean checkIfWebRadioSelected() {
+        return searchWebRadio.isSelected();
+    }
+
+    public void clickPeopleRadio() {
+        searchPeopleRadio.click();
+    }
+
+    public boolean checkIfPeopleRadioSelected() {
+        return searchPeopleRadio.isSelected();
+    }
+
+    public void fillSearchInput(String input) {
+        searchInput.clear();
+        searchInput.sendKeys(input);
+    }
+
+    public void clickSearchButton() {
+        searchButton.click();
+    }
+
+    public void clickFacultyTab() {
+        facultyTab.click();
+    }
+
+    public void clickRecruitmentTab() {
+        recruitmentTab.click();
+    }
+
+    public void clickStudyTab() {
+        studyTab.click();
+    }
+
+    public void clickResearchTab() {
+        researchTab.click();
+    }
+
+    public void clickContactTab() {
+        contactTab.click();
+    }
+
+    public void clickEnglishTab() {
+        englishTab.click();
+    }
+
+    public String getTextFromSearchResultTitle() {
+        return searchResultPageTitle.getText();
+    }
+
+    public String getTextFromFooter() {
+        return copyrightsFooter.getText();
+    }
+
+
 
     public BasePage(WebDriver driver) {
         super(driver);
