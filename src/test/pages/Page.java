@@ -2,11 +2,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 public class Page {
-    protected WebDriver browser;
+    protected WebDriver driver;
 
-    public Page(WebDriver browser) {
-        this.browser = browser;
-        PageFactory.initElements(browser, this);
+    public Page(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
         PropertiesReader.setProperties();
     }
 }

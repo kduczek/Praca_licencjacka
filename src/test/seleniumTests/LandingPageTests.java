@@ -7,13 +7,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LandingPageTests {
     private static WebDriver driver;
-    private static BasePage page;
+    private static LandingPage page;
 
     @BeforeAll
     static void init() {
         driver = new ChromeDriver();
         driver.get(PathBuilder.createPath(""));
-        page = new BasePage(driver);
+        page = new LandingPage(driver);
     }
 
     @Test

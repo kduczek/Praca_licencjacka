@@ -5,7 +5,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class BasePage extends Page{
+public class LandingPage extends Page{
 
     @FindBy(xpath = "//img[@alt='Wydział Matematyki i Informatyki UŁ']")
     private WebElement facultyLogo;
@@ -212,7 +212,7 @@ public class BasePage extends Page{
         return mainPageMenu.size();
     }
 
-    public BasePage(WebDriver driver) {
+    public LandingPage(WebDriver driver) {
         super(driver);
     }
 }
