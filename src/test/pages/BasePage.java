@@ -1,6 +1,9 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 public class BasePage extends Page{
 
@@ -60,6 +63,25 @@ public class BasePage extends Page{
 
     @FindBy(className = "copy")
     private WebElement copyrightsFooter;
+
+    @FindBy(xpath = "//ol[@class='carousel-indicators']")
+    private WebElement slider;
+
+    @FindBy(className = "glyphicon-chevron-right")
+    private WebElement arrowRight;
+
+    @FindBy(className = "glyphicon-chevron-left")
+    private WebElement arrowLeft;
+
+    @FindBy(xpath = "//div[@class='item active']/div/p/a")
+//    @FindBy(xpath = "//a[text() = ('więcej...', 'treść komunikatu', 'szczegóły', 'Dowiedz się więcej')]")
+//    @FindBy(xpath = "//a[text() = 'więcej...' or text() = 'szczegóły']")
+    private WebElement sliderButton;
+
+    @FindBy(xpath = "//ul[@class='nav bs-docs-sidenav']/li/a")
+    public List<WebElement> mainPageMenu;
+
+
 
     public void clickFacultyLogo() {
         facultyLogo.click();
@@ -146,7 +168,49 @@ public class BasePage extends Page{
         return copyrightsFooter.getText();
     }
 
+    public void goThroughAllSlides() {
+        List<WebElement> dots = slider.findElements(By.tagName("li"));
+        for(WebElement element : dots) {
+            try {
+                element.click();
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
+    public void clickRightSliderArrow() {
+        arrowRight.click();
+    }
+
+    public void clickLeftSliderArrow() {
+        arrowLeft.click();
+    }
+
+    public void clickSliderButton() {
+        sliderButton.click();
+    }
+
+    public WebElement getSliderButton() {
+        return sliderButton;
+    }
+
+    public List<WebElement> getListOfMainMenuElements() {
+        return mainPageMenu;
+    }
+
+    public void clickMainMenuItemUsingIndex(int index) {
+        mainPageMenu.get(index).click();
+    }
+
+    public String getHrefFromMainMenuItemUsingIndex(int index) {
+        return Utils.getLinkFromElement(mainPageMenu.get(index));
+    }
+
+    public int getSizeOfMainMenuItems() {
+        return mainPageMenu.size();
+    }
 
     public BasePage(WebDriver driver) {
         super(driver);
