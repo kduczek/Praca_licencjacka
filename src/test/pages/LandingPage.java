@@ -74,12 +74,10 @@ public class LandingPage extends Page{
     private WebElement arrowLeft;
 
     @FindBy(xpath = "//div[@class='item active']/div/p/a")
-//    @FindBy(xpath = "//a[text() = ('więcej...', 'treść komunikatu', 'szczegóły', 'Dowiedz się więcej')]")
-//    @FindBy(xpath = "//a[text() = 'więcej...' or text() = 'szczegóły']")
     private WebElement sliderButton;
 
     @FindBy(xpath = "//ul[@class='nav bs-docs-sidenav']/li/a")
-    public List<WebElement> mainPageMenu;
+    private List<WebElement> mainPageMenu;
 
 
 
@@ -210,6 +208,16 @@ public class LandingPage extends Page{
 
     public int getSizeOfMainMenuItems() {
         return mainPageMenu.size();
+    }
+
+    public String openNestedMenuAndReturnHref(int position) {
+        WebElement openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/a[1]"));
+        openDrawer.click();
+//        openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li[1]"));
+        String href = Utils.getLinkFromElement(openDrawer);
+//        openDrawer.click();
+
+        return href;
     }
 
     public LandingPage(WebDriver driver) {

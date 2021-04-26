@@ -3,7 +3,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.List;
 
 public class LandingPageTests {
     private static WebDriver driver;
@@ -13,6 +16,7 @@ public class LandingPageTests {
     static void init() {
         driver = new ChromeDriver();
         driver.get(PathBuilder.createPath(""));
+        driver.manage().window().maximize();
         page = new LandingPage(driver);
     }
 
@@ -218,14 +222,14 @@ public class LandingPageTests {
 
     @Test
     public void rightArrowTest() {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             page.clickRightSliderArrow();
         }
     }
 
     @Test
     public void leftArrowTest() {
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             page.clickLeftSliderArrow();
         }
     }
@@ -241,45 +245,34 @@ public class LandingPageTests {
         Utils.previousPage(driver);
     }
 
-//    @Test
-//    public void mainPageMenuLinksTest() {
-//        List<WebElement> mainPageMenu = page.getListOfMainMenuElements();
-//        for(int i = 0; i < 9; i++) {
-//            String[] hrefAndPageUrl = new String[2];
-//            try {
-//                hrefAndPageUrl[0] = mainPageMenu.get(i).getAttribute("href");
-//                hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
-//                mainPageMenu.get(i).click();
-//            } catch (IndexOutOfBoundsException exception) {
-//                WebElement openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[3]/a[1]"));
-////                WebElement openDrawer = driver.findElement(By.xpath("//ul[@class='nav bs-docs-sidenav']/li[" + i + "]/a[1]"));
-//                openDrawer.click();
-//                WebElement element = driver.findElement(By.xpath("//ul[@class='nav bs-docs-sidenav']/li[" + i + "]/ul[1]/li[1]"));
-//                hrefAndPageUrl[0] = element.getAttribute("href");
-//                hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
-//                element.click();
-//            }
-//
-//            Utils.waitUntilPageLoaded();
-//            hrefAndPageUrl[1] = driver.getCurrentUrl();
-//            Utils.makeStringsEqualLength(hrefAndPageUrl);
-//
-//            Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
-//
-//            Utils.previousPage(driver);
-//            Utils.waitUntilPageLoaded();
-//        }
-//    }
-//
-//    @Test
-//    public void test() throws InterruptedException {
-//        WebElement openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[3]/a[1]"));
-//        openDrawer.click();
-//
-//        openDrawer = driver.findElement(By.xpath("//ul[@class='nav bs-docs-sidenav']/li[3]/ul[1]/li[1]"));
-//        openDrawer.click();
-//        Thread.sleep(3000);
-//    }
+    @Test
+    public void mainPageMenuLinksWithoutSubMenusTest() {
+        List<WebElement> mainPageMenu = page.getListOfMainMenuElements();
+
+        for (int i = 0; i < mainPageMenu.size(); i++) {
+            String[] hrefAndPageUrl = new String[2];
+            if (i != 2 && i != 5) {
+                hrefAndPageUrl[0] = mainPageMenu.get(i).getAttribute("href");
+                hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
+                mainPageMenu.get(i).click();
+
+
+                Utils.waitUntilPageLoaded();
+                hrefAndPageUrl[1] = driver.getCurrentUrl();
+                System.out.println(i);
+                Utils.makeStringsEqualLength(hrefAndPageUrl);
+
+                Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
+
+                Utils.previousPage(driver);
+                Utils.waitUntilPageLoaded();
+            }
+        }
+    }
+
+
+
+
     @AfterAll
     static void closeBrowser() {
         driver.manage().deleteAllCookies();
