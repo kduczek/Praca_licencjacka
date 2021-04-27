@@ -210,14 +210,23 @@ public class LandingPage extends Page{
         return mainPageMenu.size();
     }
 
-    public String openNestedMenuAndReturnHref(int position) {
+    public void openNestedMenu(int position) {
         WebElement openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/a[1]"));
         openDrawer.click();
-//        openDrawer = driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li[1]"));
-        String href = Utils.getLinkFromElement(openDrawer);
-//        openDrawer.click();
+        Utils.waitUntilElementVisible(driver, "//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/a[1]");
+    }
 
-        return href;
+    public List<WebElement> returnListOfElements(int position){
+//        openNestedMenu(position);
+        return driver.findElements(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li/a"));
+    }
+
+    public int returnSizeOfSubmenu(int position) {
+        return this.returnListOfElements(position).size();
+    }
+
+    public WebElement returnElementFromSubmenu(int position, int positionInSubmenu) {
+        return driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li[" + positionInSubmenu +"]/a"));
     }
 
     public LandingPage(WebDriver driver) {

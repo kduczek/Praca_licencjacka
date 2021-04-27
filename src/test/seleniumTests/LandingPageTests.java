@@ -1,13 +1,11 @@
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.List;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class LandingPageTests {
     private static WebDriver driver;
     private static LandingPage page;
@@ -246,7 +244,7 @@ public class LandingPageTests {
     }
 
     @Test
-    public void mainPageMenuLinksWithoutSubMenusTest() {
+    public void mainPageMenuLinksWithoutSubmenusTest() {
         List<WebElement> mainPageMenu = page.getListOfMainMenuElements();
 
         for (int i = 0; i < mainPageMenu.size(); i++) {
@@ -256,10 +254,8 @@ public class LandingPageTests {
                 hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
                 mainPageMenu.get(i).click();
 
-
                 Utils.waitUntilPageLoaded();
                 hrefAndPageUrl[1] = driver.getCurrentUrl();
-                System.out.println(i);
                 Utils.makeStringsEqualLength(hrefAndPageUrl);
 
                 Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
@@ -270,7 +266,59 @@ public class LandingPageTests {
         }
     }
 
+    @Test
+    @Order(1)
+    public void elearningSubmenuLinksTest() {
+        int positionInMainMenu = 3;
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < page.returnSizeOfSubmenu(positionInMainMenu); i++) {
+            String[] hrefAndPageUrl = new String[2];
+            page.openNestedMenu(positionInMainMenu);
+            hrefAndPageUrl[0] = page.returnElementFromSubmenu(positionInMainMenu, i + 1).getAttribute("href");
+            hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
+            page.returnElementFromSubmenu(positionInMainMenu, i + 1).click();
 
+            Utils.waitUntilPageLoaded();
+            hrefAndPageUrl[1] = driver.getCurrentUrl();
+            Utils.makeStringsEqualLength(hrefAndPageUrl);
+
+            Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
+
+            Utils.previousPage(driver);
+            Utils.waitUntilPageLoaded();
+        }
+    }
+
+    @Test
+    @Order(2)
+    public void businessAdviceSubmenuLinksTest() {
+        int positionInMainMenu = 6;
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < page.returnSizeOfSubmenu(positionInMainMenu); i++) {
+            String[] hrefAndPageUrl = new String[2];
+            page.openNestedMenu(positionInMainMenu);
+            hrefAndPageUrl[0] = page.returnElementFromSubmenu(positionInMainMenu, i + 1).getAttribute("href");
+            hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
+            page.returnElementFromSubmenu(positionInMainMenu, i + 1).click();
+
+            Utils.waitUntilPageLoaded();
+            hrefAndPageUrl[1] = driver.getCurrentUrl();
+            Utils.makeStringsEqualLength(hrefAndPageUrl);
+
+            Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
+
+            Utils.previousPage(driver);
+            Utils.waitUntilPageLoaded();
+        }
+    }
 
 
     @AfterAll

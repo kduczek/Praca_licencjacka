@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +18,11 @@ public class Utils {
         ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
     }
 
+    public static void waitUntilElementVisible(WebDriver driver, String xpath)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
+    }
     public static void previousPage(WebDriver driver) {
         driver.navigate().back();
     }
