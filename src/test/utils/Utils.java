@@ -69,24 +69,8 @@ public class Utils {
         return link;
     }
 
-    public static String makeStringsLengthEqual(String expected, String actual) {
-        int expectedLength = expected.length();
-        int actualLength = actual.length();
-        int diff = actualLength - expectedLength;
 
-        if(diff < 0) {
-            diff = expectedLength - actualLength;
-        }
-
-        System.out.println(diff);
-        if(actualLength > expectedLength) {
-            return expected.substring(0, expectedLength - diff);
-        } else {
-            return actual.substring(0, actualLength - diff);
-        }
-    }
-
-    public static String[] makeStringsEqualLength(String[] strings) {
+    public static void makeStringsEqualLength(String[] strings) {
         int length = strings[0].length();
 
         for(String str : strings) {
@@ -101,7 +85,6 @@ public class Utils {
             }
         }
 
-        return strings;
     }
 
 }

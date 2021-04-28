@@ -233,6 +233,7 @@ public class LandingPageTests {
     }
 
     @Test
+    @Order(1)
     public void sliderButtonTest() {
         Utils.waitForElementToBeClickable(driver, page.getSliderButton());
         String link = Utils.getLinkFromElement(page.getSliderButton());
@@ -267,7 +268,7 @@ public class LandingPageTests {
     }
 
     @Test
-    @Order(1)
+    @Order(2)
     public void elearningSubmenuLinksTest() {
         int positionInMainMenu = 3;
         try {
@@ -294,7 +295,7 @@ public class LandingPageTests {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     public void businessAdviceSubmenuLinksTest() {
         int positionInMainMenu = 6;
         try {
@@ -318,6 +319,32 @@ public class LandingPageTests {
             Utils.previousPage(driver);
             Utils.waitUntilPageLoaded();
         }
+    }
+
+    @Test
+    public void clickAllReadMoreButtons() {
+        List<WebElement> buttons = page.returnReadMoreButtonsList();
+
+        for(int i = 0; i < buttons.size(); i++) {
+            String[] hrefAndPageUrl = new String[2];
+            hrefAndPageUrl[0] = buttons.get(i).getAttribute("href");
+            hrefAndPageUrl[0] = Utils.ifNotHttpsAddS(hrefAndPageUrl[0]);
+            buttons.get(i).click();
+
+            Utils.waitUntilPageLoaded();
+            hrefAndPageUrl[1] = driver.getCurrentUrl();
+            Utils.makeStringsEqualLength(hrefAndPageUrl);
+
+            Assertions.assertEquals(hrefAndPageUrl[0], hrefAndPageUrl[1]);
+
+            Utils.previousPage(driver);
+            Utils.waitUntilPageLoaded();
+        }
+    }
+
+    @Test
+    public void newsLabelTextTest() {
+        Assertions.assertEquals("Aktualności", page.returnNewsLabelText());
     }
 
 

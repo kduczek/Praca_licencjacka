@@ -79,6 +79,11 @@ public class LandingPage extends Page{
     @FindBy(xpath = "//ul[@class='nav bs-docs-sidenav']/li/a")
     private List<WebElement> mainPageMenu;
 
+    @FindBy(linkText = "Czytaj dalej »")
+    private List<WebElement> readMoreButtonsList;
+
+    @FindBy(xpath = "//div[@id='news']/h2")
+    private WebElement newsLabel;
 
 
     public void clickFacultyLogo() {
@@ -198,16 +203,8 @@ public class LandingPage extends Page{
         return mainPageMenu;
     }
 
-    public void clickMainMenuItemUsingIndex(int index) {
-        mainPageMenu.get(index).click();
-    }
-
-    public String getHrefFromMainMenuItemUsingIndex(int index) {
-        return Utils.getLinkFromElement(mainPageMenu.get(index));
-    }
-
-    public int getSizeOfMainMenuItems() {
-        return mainPageMenu.size();
+    public String returnNewsLabelText() {
+        return newsLabel.getText();
     }
 
     public void openNestedMenu(int position) {
@@ -217,7 +214,6 @@ public class LandingPage extends Page{
     }
 
     public List<WebElement> returnListOfElements(int position){
-//        openNestedMenu(position);
         return driver.findElements(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li/a"));
     }
 
@@ -227,6 +223,10 @@ public class LandingPage extends Page{
 
     public WebElement returnElementFromSubmenu(int position, int positionInSubmenu) {
         return driver.findElement(By.xpath("//body/div[@id='content']/div[1]/div[1]/nav[1]/ul[1]/li[" + position + "]/ul/li[" + positionInSubmenu +"]/a"));
+    }
+
+    public List<WebElement> returnReadMoreButtonsList() {
+        return readMoreButtonsList;
     }
 
     public LandingPage(WebDriver driver) {
