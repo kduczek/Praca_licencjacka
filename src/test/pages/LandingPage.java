@@ -85,6 +85,14 @@ public class LandingPage extends Page{
     @FindBy(xpath = "//div[@id='news']/h2")
     private WebElement newsLabel;
 
+    @FindBy(xpath = "//table/tbody/tr/td[@class='email-field']/a")
+    private WebElement searchedEmail;
+
+    @FindBy(xpath = "//a[contains(text(),'Kalendarz')]")
+    private WebElement calendarFromMenu;
+
+    @FindBy(xpath = "//div[@class='entry']/h3[1][a]")
+    private WebElement firstSchedule;
 
     public void clickFacultyLogo() {
         facultyLogo.click();
@@ -227,6 +235,18 @@ public class LandingPage extends Page{
 
     public List<WebElement> returnReadMoreButtonsList() {
         return readMoreButtonsList;
+    }
+
+    public String getSearchedEmail() {
+        return searchedEmail.getText();
+    }
+
+    public void clickCalendarFromMenu() {
+        calendarFromMenu.click();
+    }
+
+    public void clickFirstSchedule() {
+        firstSchedule.click();
     }
 
     public LandingPage(WebDriver driver) {
