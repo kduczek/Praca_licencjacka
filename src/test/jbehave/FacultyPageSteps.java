@@ -1,6 +1,7 @@
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.steps.Steps;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -81,21 +82,21 @@ public class FacultyPageSteps extends Steps {
         Assert.assertTrue(Utils.isFileDownloaded(fileName));
     }
 
-    @When("user populate Search field with phrase $Cybula and clicks People radio button")
-    public void fillSearchFieldWithPhrase(String phrase) {
-        page.clickPeopleRadio();
-        page.fillSearchInput(phrase);
-    }
-
     @When("clicks Search button")
     public void clickSearch() {
         page.clickSearchButton();
     }
 
-    @Then("user gets searching results for given phrase $Cybula")
+    @Then("user gets searching results for given phrase $givenPhrase")
     public void compareResults(String phrase) {
         Utils.waitUntilPageLoaded();
         Assert.assertEquals("https://www.math.uni.lodz.pl/?search_type=people&s=" + phrase, driver.getCurrentUrl());
+    }
+
+    @When("user populate Search field with phrase $givenPhrase and clicks People radio button")
+    public void fillSearchFieldWithPhrase(String phrase) {
+        page.clickPeopleRadio();
+        page.fillSearchInput(phrase);
     }
 
     @Then("user gets email of searched person")
@@ -106,10 +107,19 @@ public class FacultyPageSteps extends Steps {
         Assert.assertTrue(matcher.find());
     }
 
-    @When("user clicks Kalendarz from main menu")
-    public void openCalendarSubpage() {
-        page.clickCalendarFromMenu();
-        chosenPage = "https://www.math.uni.lodz.pl/kalendarz/";
+    @When("user clicks $menuItem from main menu")
+    public void openMenuSubpage(String menuItem) {
+        switch (menuItem) {
+            case "Kalendarz":
+                page.clickCalendarFromMenu();
+                chosenPage = "https://www.math.uni.lodz.pl/kalendarz/";
+                break;
+            case "Dziekanat":
+                page.clickDeansOfficeFromMenu();
+                chosenPage = "https://www.math.uni.lodz.pl/dziekanat/";
+                break;
+        }
+
     }
 
     @When("user clicks for first schedule of academic year to download")
@@ -145,6 +155,24 @@ public class FacultyPageSteps extends Steps {
     @Then("user is on recruitment website")
     public void checkIfCurrentPageIsRecruitmentService() {
         Assert.assertEquals("https://rekrutacja.uni.lodz.pl/index.php", driver.getCurrentUrl());
+    }
+
+    @When("user scrolls down page to bottom")
+    public void scrollToBottomOfPage() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        Thread.sleep(2000);
+    }
+
+    @When("clicks USOS button")
+    public void goToUSOS() {
+        page.clickUsosButton();
+    }
+
+    @Then("user is on USOS service website")
+    public void checkIfUSOSIsCurrentWebpage() {
+        Utils.waitUntilPageLoaded();
+        Assert.assertEquals("https://usosweb.uni.lodz.pl/kontroler.php?_action=actionx:news/default()", driver.getCurrentUrl());
     }
 
     @AfterStories

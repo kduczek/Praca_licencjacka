@@ -91,6 +91,9 @@ public class LandingPage extends Page{
     @FindBy(xpath = "//a[contains(text(),'Kalendarz')]")
     private WebElement calendarFromMenu;
 
+    @FindBy(xpath = "//nav/ul/li[4]/a")
+    private WebElement deansOfficeFromMenu;
+
     @FindBy(xpath = "//div[@class='entry']/h3[1][a]")
     private WebElement firstSchedule;
 
@@ -243,6 +246,10 @@ public class LandingPage extends Page{
 
     public void clickCalendarFromMenu() {
         calendarFromMenu.click();
+    }
+
+    public void clickDeansOfficeFromMenu() {
+        deansOfficeFromMenu.click();
     }
 
     public void clickFirstSchedule() {

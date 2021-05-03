@@ -26,3 +26,11 @@ When user clicks Rekrutacja tab
 Then page is loaded
 When user clicks Serwis Rekrutacyjny UŁ in recruitment page
 Then user is on recruitment website
+
+Scenario: The scope of this test is to spent some time on deans office site and then go to USOS
+Given a landing page of Faculty
+When user clicks Dziekanat from main menu
+Then page is loaded
+When user scrolls down page to bottom
+And clicks USOS button
+Then user is on USOS service website
