@@ -6,7 +6,7 @@ When user clicks Studia I stopnia in recruitment page
 And user clicks for first study plan to download
 Then file DLI_io_19_15maja2019.pdf is downloaded
 
-Scenario: The scope of this test is to find teacher usign Searching ang get his email address
+Scenario: The scope of this test is to find teacher using Searching and get his email address
 Given a landing page of Faculty
 When user populate Search field with phrase Cybula and clicks People radio button
 And clicks Search button
